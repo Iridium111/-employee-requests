@@ -9,11 +9,11 @@ class DepartmentResponse(BaseModel):
     id: int
     name: str
 
+    model_config = ConfigDict(from_attributes=True)
+
 
 class DepartmentUpdate(BaseModel):
     name: str | None = None
-
-    model_config = ConfigDict(from_attributes=True)
 
 
 

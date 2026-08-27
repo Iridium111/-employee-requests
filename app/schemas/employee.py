@@ -1,5 +1,5 @@
 from pydantic import BaseModel, ConfigDict
-from app.schemas.departments import DepartmentResponse
+from app.schemas.department import DepartmentResponse
 
 class EmployeeCreate(BaseModel):
     fullname: str
