@@ -62,6 +62,24 @@ def test_delete_department(client):
     assert check_delete_department.status_code == 200
     assert list_data == []
 
+def test_delete_department_not_found(client):
+    response = client.delete("/api/v1/departments/999")
+
+    assert response.status_code == 404
+    assert response.json()['detail'] == 'Department not found.'
+
+def test_update_department_not_found(client):
+    response = client.patch("/api/v1/departments/999",
+                            json={'name': 'test_update_department'},)
+
+    assert response.status_code == 404
+    assert response.json()['detail'] == 'Department not found.'
+
+def test_create_department_invalid_data(client):
+    response = client.post('/api/v1/departments',
+                           json={'name': 123},)
+
+    assert response.status_code == 422
 
 
 
