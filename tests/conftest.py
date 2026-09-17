@@ -1,3 +1,4 @@
+import pytest
 import pytest_asyncio
 from sqlalchemy import NullPool
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
@@ -24,6 +25,15 @@ app.dependency_overrides[get_async_session] = override_get_async_session
 def client():
     with TestClient(app) as test_client:
         yield test_client
+
+@pytest.fixture
+def department(client):
+    create_department = client.post("/api/v1/departments",
+                                    json={
+                                        'name': 'test_department'
+                                    })
+    assert create_department.status_code == 201
+    return create_department.json()
 
 @pytest_asyncio.fixture(scope="session",
                         loop_scope="session",

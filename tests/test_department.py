@@ -2,7 +2,7 @@ def test_get_departments(client):
     create_test_departments = client.post('/api/v1/departments',
                            json={
                                "name": "test_department"
-                           },)
+                           })
     assert create_test_departments.status_code == 201
 
     response = client.get('api/v1/departments',)
@@ -15,7 +15,7 @@ def test_create_department(client):
     response = client.post('/api/v1/departments',
                            json={
                                "name": "test_department"
-                           },)
+                           })
 
     data = response.json()
     assert response.status_code == 201
@@ -25,7 +25,7 @@ def test_update_department(client):
     create_test_department = client.post('/api/v1/departments',
                                          json={
                                              'name': 'test_department'
-                                         },)
+                                         })
 
     created_data = create_test_department.json()
     response_id = created_data['id']
@@ -33,7 +33,7 @@ def test_update_department(client):
     response = client.patch(f'/api/v1/departments/{response_id}',
                             json={
                                 'name': 'test_update_department'
-                            },)
+                            })
     updated_data = response.json()
 
     assert response.status_code == 200
@@ -44,7 +44,7 @@ def test_delete_department(client):
     create_test_department = client.post('api/v1/departments',
                                          json={
                                              'name': 'test_department'
-                                         },)
+                                         })
     created_data = create_test_department.json()
     response_id = created_data['id']
 
@@ -70,14 +70,14 @@ def test_delete_department_not_found(client):
 
 def test_update_department_not_found(client):
     response = client.patch("/api/v1/departments/999",
-                            json={'name': 'test_update_department'},)
+                            json={'name': 'test_update_department'})
 
     assert response.status_code == 404
     assert response.json()['detail'] == 'Department not found.'
 
 def test_create_department_invalid_data(client):
     response = client.post('/api/v1/departments',
-                           json={'name': 123},)
+                           json={'name': 123})
 
     assert response.status_code == 422
 
