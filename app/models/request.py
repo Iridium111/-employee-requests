@@ -15,10 +15,10 @@ if TYPE_CHECKING:
 class Request(Base, TimeStampMixin):
     __tablename__ = "requests"
 
-    number: Mapped[str] = mapped_column(unique=True, index=True)
+    number: Mapped[str | None] = mapped_column(unique=True, index=True, nullable=True)
     description: Mapped[str] = mapped_column(nullable=False)
     deadline: Mapped[datetime]  = mapped_column(nullable=False)
-    status: Mapped[str] = mapped_column(nullable=False)
+    status: Mapped[str] = mapped_column(nullable=False, default='CREATED')
     author_id: Mapped[int] = mapped_column(ForeignKey("employees.id"))
     executor_id: Mapped[int] = mapped_column(ForeignKey("employees.id"))
 
