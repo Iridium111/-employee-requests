@@ -1,15 +1,17 @@
+from collections.abc import Sequence
+
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.department import Department
 from app.schemas.department import DepartmentCreate, DepartmentUpdate
-from sqlalchemy import select
 
 
 class DepartmentRepository:
     @staticmethod
     async def get_all(
             session: AsyncSession
-    ):
+    ) -> Sequence[Department]:
         stmt = select(Department)
         result = await session.execute(stmt)
         return result.scalars().all()
@@ -18,7 +20,7 @@ class DepartmentRepository:
     async def find_by_id(
             session: AsyncSession,
             department_id: int
-    ):
+    ) -> Department | None:
         stmt = select(Department).where(Department.id == department_id)
         result = await session.execute(stmt)
         return result.scalar_one_or_none()
@@ -27,7 +29,7 @@ class DepartmentRepository:
     async def create(
             session: AsyncSession,
             department_data: DepartmentCreate
-    ):
+    ) -> Department:
         db_department = Department(**department_data.model_dump())
         session.add(db_department)
 
@@ -39,7 +41,7 @@ class DepartmentRepository:
     async def delete(
             session: AsyncSession,
             db_department: Department
-    ):
+    ) -> Department:
         await session.delete(db_department)
         await session.commit()
         return db_department
@@ -49,7 +51,7 @@ class DepartmentRepository:
             session: AsyncSession,
             department_data: DepartmentUpdate,
             db_department: Department
-    ):
+    ) -> Department:
         update_data = department_data.model_dump(exclude_unset=True)
 
         for key, value in update_data.items():

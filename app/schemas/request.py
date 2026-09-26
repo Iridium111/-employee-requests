@@ -12,6 +12,7 @@ class RequestCreate(BaseModel):
 
 
 class RequestResponse(BaseModel):
+    id: int
     number: str
     description: str
     deadline: datetime
