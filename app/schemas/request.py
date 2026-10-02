@@ -2,6 +2,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict
 from app.schemas.employee import EmployeeResponse
+from app.services.request_state import RequestState
 
 
 class RequestCreate(BaseModel):
@@ -30,5 +31,5 @@ class RequestUpdate(BaseModel):
 
 
 class RequestChangeStatus(BaseModel):
-    status: str
+    status: RequestState
 

@@ -35,6 +35,40 @@ def department(client):
     assert create_department.status_code == 201
     return create_department.json()
 
+@pytest.fixture
+def author(client, department):
+    create_author = client.post('/api/v1/employees',
+                                json={
+                                    'fullname': 'test_author',
+                                    'position': 'test_department',
+                                    'department_id': department['id']
+                                })
+    assert create_author.status_code == 201
+    return create_author.json()
+
+@pytest.fixture
+def executor(client, department):
+    create_executor = client.post('/api/v1/employees',
+                                  json={
+                                      'fullname': 'test_executor',
+                                      'position': 'test',
+                                      'department_id': department['id']
+                                  })
+    assert create_executor.status_code == 201
+    return create_executor.json()
+
+@pytest.fixture
+def created_request(client, author, executor):
+    create_request = client.post('/api/v1/requests',
+                                 json={
+                                     'description': 'test_description',
+                                     'deadline': '2011-11-11',
+                                     'author_id': author['id'],
+                                     'executor_id': executor['id']
+                                 })
+    assert create_request.status_code == 201
+    return create_request.json()
+
 @pytest_asyncio.fixture(scope="session",
                         loop_scope="session",
                         autouse=True)

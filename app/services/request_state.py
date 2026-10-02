@@ -1,17 +1,30 @@
+from enum import Enum
+
+class RequestState(str, Enum):
+    CREATED = 'CREATED'
+    IN_PROGRESS = 'IN_PROGRESS'
+    DONE = "DONE"
+    CANCELLED = "CANCELLED"
 
 class RequestStateMachine:
     ALLOWED_TRANSITIONS = {
-        "CREATED": {"IN_PROGRESS", "CANCELLED"},
-        "IN_PROGRESS": {"DONE", "CANCELLED"},
-        "DONE": set(),
-        "CANCELLED": set(),
+        RequestState.CREATED: {
+            RequestState.IN_PROGRESS,
+             RequestState.CANCELLED
+        },
+        RequestState.IN_PROGRESS:{
+            RequestState.DONE,
+             RequestState.CANCELLED
+        },
+        RequestState.DONE: set(),
+        RequestState.CANCELLED: set(),
     }
 
     @classmethod
     def can_transition(
             cls,
-            current_status: str,
-            new_status: str,
+            current_status: RequestState,
+            new_status: RequestState,
     ) -> bool:
         if (
                 current_status not in cls.ALLOWED_TRANSITIONS or
@@ -20,6 +33,3 @@ class RequestStateMachine:
             raise ValueError("Unknown status.")
 
         return new_status in cls.ALLOWED_TRANSITIONS[current_status]
-
-
-

@@ -19,7 +19,7 @@ async def get_requests(
 
 @router.post("/",
              response_model=RequestResponse,
-             status_code=200)
+             status_code=201)
 async def create_request(
         request_data: RequestCreate,
         session: AsyncSession = Depends(get_async_session)
@@ -47,7 +47,7 @@ async def change_status(
     db_request = await RequestRepository.find_by_id(session=session, id=request_id)
 
     if db_request is None:
-        raise HTTPException(status_code=404, detail="Request not found")
+        raise HTTPException(status_code=404, detail="Request not found.")
 
     try:
         RequestService.change_status(request=db_request, new_status=request_data)
