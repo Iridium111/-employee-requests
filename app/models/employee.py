@@ -8,6 +8,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 if TYPE_CHECKING:
     from app.models.request import Request
+    from app.models.user import User
 
 
 class Employee(Base):
@@ -24,3 +25,4 @@ class Employee(Base):
     assigned_requests: Mapped[list[Request]] = relationship("Request",
                                                             back_populates="executor",
                                                             foreign_keys="Request.executor_id")
+    user: Mapped["User | None"] = relationship("User", back_populates="employee", uselist=False)

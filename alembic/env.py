@@ -10,6 +10,7 @@ from app.models.base import Base
 from app.models.department import Department
 from app.models.employee import Employee
 from app.models.request import Request
+from app.models.user import User
 from app.core.config import settings
 
 # this is the Alembic Config object, which provides
