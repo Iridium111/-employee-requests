@@ -36,10 +36,10 @@ class RequestRepository:
     @staticmethod
     async def find_by_id(
             session: AsyncSession,
-            id: int
+            request_id: int
     ) -> Request | None:
         stmt = (select(Request)
-                .where(Request.id == id)
+                .where(Request.id == request_id)
                 .options(selectinload(Request.author).selectinload(Employee.department),
                          selectinload(Request.executor).selectinload(Employee.department)))
         result = await session.execute(stmt)
