@@ -2,7 +2,6 @@ from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
-from app.core.security import hash_password
 from app.models.user import User
 from app.schemas.user import UserCreate
 
@@ -53,3 +52,11 @@ class UserRepository:
 
         return result.scalar_one_or_none()
 
+    @staticmethod
+    async def update_refresh_token(session: AsyncSession,
+                                   user_id: UUID,
+                                   refresh_token: str | None) -> None:
+        user = await session.get(User, user_id)
+        if user:
+            user.refresh_token = refresh_token
+            await session.commit()

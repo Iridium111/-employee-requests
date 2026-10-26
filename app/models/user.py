@@ -16,6 +16,7 @@ class User(Base):
     login: Mapped[str] = mapped_column(unique=True, nullable=False)
     email: Mapped[str] = mapped_column(unique=True, nullable=False)
     hashed_password: Mapped[str] = mapped_column(nullable=False)
+    refresh_token: Mapped[str | None] = mapped_column(nullable=True, default=None)
     employee_id: Mapped[int] = mapped_column(ForeignKey("employees.id"), unique=True)
 
     employee: Mapped["Employee"] = relationship("Employee", back_populates="user")

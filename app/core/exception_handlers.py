@@ -25,3 +25,15 @@ async def employee_not_found_handler(request: Request,
                                      exc: Exception) -> JSONResponse:
     return JSONResponse(status_code=status.HTTP_404_NOT_FOUND,
                         content={'detail': 'Employee not found.'})
+
+async def wrong_login_or_password_handler(request: Request,
+                                          exc: Exception) -> JSONResponse:
+    return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED,
+                        content={'detail': 'Wrong login or password.'},
+                        headers={"WWW-Authenticate": "Bearer"})
+
+async def wrong_refresh_token_handler(request: Request,
+                                      exc: Exception) -> JSONResponse:
+    return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED,
+                        content={'detail': 'Wrong refresh token.'},
+                        headers={"WWW-Authenticate": "Bearer"})

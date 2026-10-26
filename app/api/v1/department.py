@@ -38,7 +38,6 @@ async def update_department(
 
     return await DepartmentRepository.update(session, department_data, db_department)
 
-
 @router.delete('/{department_id}',
                response_model=DepartmentResponse,
                status_code=200)

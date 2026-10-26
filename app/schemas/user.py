@@ -15,3 +15,14 @@ class UserResponse(BaseModel):
     employee_id: int
 
     model_config = ConfigDict(from_attributes=True)
+
+class LoginRequest(BaseModel):
+    login: str
+    password: str
+
+class TokenResponse(BaseModel):
+    access_token: str
+    refresh_token: str
+
+class RefreshTokenRequest(BaseModel):
+    refresh_token: str

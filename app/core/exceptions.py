@@ -12,3 +12,10 @@ class EmployeeAlreadyRegisteredError(Exception):
 
 class EmployeeNotFoundError(Exception):
     pass
+
+
+class InvalidCredentialsError(Exception):
+    pass
+
+class InvalidRefreshTokenError(Exception):
+    pass

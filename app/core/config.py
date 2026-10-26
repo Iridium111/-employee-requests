@@ -7,6 +7,10 @@ class Settings(BaseSettings):
     DB_PASSWORD: str
     DB_NAME: str
     TEST_DB_NAME: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 15
+    REFRESH_TOKEN_EXPIRE_DAYS: int = 30
+    SECRET_KEY: str
+    ALGORITHM: str = 'HS256'
 
     @property
     def DB_URL(self) -> str:

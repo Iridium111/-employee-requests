@@ -4,11 +4,15 @@ from app.api.router import api_v1_router
 from app.core.exception_handlers import (login_exists_handler,
                                          email_exists_handler,
                                          employee_registered_handler,
-                                         employee_not_found_handler)
+                                         employee_not_found_handler,
+                                         wrong_login_or_password_handler,
+                                         wrong_refresh_token_handler)
 from app.core.exceptions import (LoginAlreadyExistsError,
                                  EmailAlreadyExistsError,
                                  EmployeeAlreadyRegisteredError,
-                                 EmployeeNotFoundError)
+                                 EmployeeNotFoundError,
+                                 InvalidCredentialsError,
+                                 InvalidRefreshTokenError)
 
 app = FastAPI(title="Employee Request Management")
 
@@ -26,3 +30,7 @@ app.add_exception_handler(EmployeeAlreadyRegisteredError,
                           employee_registered_handler)
 app.add_exception_handler(EmployeeNotFoundError,
                           employee_not_found_handler)
+app.add_exception_handler(InvalidCredentialsError,
+                          wrong_login_or_password_handler)
+app.add_exception_handler(InvalidRefreshTokenError,
+                          wrong_refresh_token_handler)
